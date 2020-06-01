@@ -15,6 +15,7 @@ let state = {
     curentCity: '',
     langPage: 'en',
     dimensionTemp: 'c',
+    currentTemp: '',
     timezone: ''
 };
 
@@ -69,6 +70,7 @@ const renderDateTimeWeather = () => {
 const renderWeatherData = (data, dimension) => {
     state.curentCity = data.name;
     let temp = dimension === 'c' ? Math.round(data.main.temp - 273.15) : Math.round((data.main.temp - 273.15) * 9/5 + 32);
+    state.currentTemp = Math.round(data.main.temp - 273.15);
     let feelsLike = dimension === 'c' ? Math.round(data.main.feels_like - 273.15) : Math.round((data.main.feels_like - 273.15) * 9/5 + 32);
     let img = new Image();
     img.src = `src/assets/icons/weather-icon/${data.weather[0].icon}.svg`;
@@ -184,29 +186,35 @@ window.addEventListener("keydown", (e) => {
 const searchForm = document.querySelector(".search-block");
 const searchFormInput = document.querySelector("input");
 
-// The speech recognition interface lives on the browser’s window object
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; // if none exists -> undefined
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; 
+
+const msg = new SpeechSynthesisUtterance();
+msg.volume = 1; // 0 to 1
+msg.rate = 1; // 0.1 to 10
+msg.pitch = 1; //0 to 2
+msg.lang = state.langPage;
+
+
 
 if(SpeechRecognition) {
-  console.log("Your Browser supports speech Recognition");
   
   const recognition = new SpeechRecognition();
   recognition.continuous = true;
-  // recognition.lang = "en-US";
+  recognition.lang = state.langPage;
 
   const micBtn = document.querySelector(".microfon-button");
 
   micBtn.addEventListener("click", micBtnClick);
   function micBtnClick() {
-    if(micBtn.classList.contains("microfon-button")) { // Start Voice Recognition
-      recognition.start(); // First time you have to allow access to mic!
+    if(micBtn.classList.contains("microfon-button")) { 
+      recognition.start(); 
     }
     else {
       recognition.stop();
     }
   }
 
-  recognition.addEventListener("start", startSpeechRecognition); // <=> recognition.onstart = function() {...}
+  recognition.addEventListener("start", startSpeechRecognition); 
   function startSpeechRecognition() {
     micBtn.classList.remove("fa-microphone-alt-slash");
     micBtn.classList.add("fa-microphone-alt");
@@ -214,7 +222,7 @@ if(SpeechRecognition) {
     console.log("Voice activated, SPEAK");
   }
 
-  recognition.addEventListener("end", endSpeechRecognition); // <=> recognition.onend = function() {...}
+  recognition.addEventListener("end", endSpeechRecognition); 
   function endSpeechRecognition() {
     micBtn.classList.remove("fa-microphone-alt");
     micBtn.classList.add("fa-microphone-alt-slash");
@@ -222,33 +230,34 @@ if(SpeechRecognition) {
     console.log("Speech recognition service disconnected");
   }
 
-  recognition.addEventListener("result", resultOfSpeechRecognition); // <=> recognition.onresult = function(event) {...} - Fires when you stop talking
+  recognition.addEventListener("result", resultOfSpeechRecognition); 
   function resultOfSpeechRecognition(event) {
     const current = event.resultIndex;
     const transcript = event.results[current][0].transcript;
     
-    if(transcript.toLowerCase().trim()==="stop recording") {
-      recognition.stop();
+    if(transcript.toLowerCase().trim()==="weather") {
+      msg.text = `Current temperature is ${state.currentTemp} degrees celsius` ;
+      speechSynthesis.speak(msg);
     }
     else if(!searchFormInput.value) {
       searchFormInput.value = transcript;
     }
     else {
-      if(transcript.toLowerCase().trim()==="go") {
-        searchForm.submit();
+      if(transcript.toLowerCase().trim()==="louder") {
+        msg.volume + .1;
       }
-      else if(transcript.toLowerCase().trim()==="reset input") {
-        searchFormInput.value = "";
+      else if(transcript.toLowerCase().trim()==="quiter") {
+        msg.volume - .1;
       }
       else {
         searchFormInput.value = transcript;
       }
     }
-    // searchFormInput.value = transcript;
-    // searchFormInput.focus();
-    // setTimeout(() => {
-    //   searchForm.submit();
-    // }, 500);
+    searchFormInput.value = transcript;
+    searchFormInput.focus();
+    setTimeout(() => {
+      renderData(transcript, state.langPage, state.dimensionTemp);
+    }, 500);
   }
   
   
