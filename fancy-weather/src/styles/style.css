@@ -1,0 +1,346 @@
+*{
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'roboto', sans-serif;
+    color: white;
+    font-size: 16px;
+}
+
+.app-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-size: cover;
+    width: 100%;
+    min-height: 100%;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10;
+    height: 10%;
+    width: 97%;
+}
+
+.controlls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.buttons-block{
+    display: flex;
+    justify-content: flex-start;
+    width: 40%;
+}
+
+.control-button{
+    border: solid 1px white;
+    background: none;
+    color: white;
+    width: 40px;
+    height: 35px;
+    margin: 2px;
+}
+
+.control-button:hover{
+    cursor: pointer;
+    background-color: rgb(29, 78, 45);
+    box-shadow: 0px 0px 10px -2px rgba(255,255,255,1);
+}
+
+.buttons-block__button_change-img{
+}
+
+.button-temp_active{
+    background-color: rgb(29, 78, 45);
+}
+
+.search-block__button{
+    font-size: 1.2rem;
+    padding: 10 10 2 10;
+    transition: all ease .3s;
+    border-left: solid 1px rgb(211, 211, 211);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.search-block__button:hover{
+    cursor: pointer;
+    background-color: rgb(29, 78, 45);
+}
+
+.search-block__input{
+    width: 100%;
+    height: 40px;
+    background: none;
+    border: none;
+    /* border-bottom: solid 1px white; */
+    color: white;
+    font-size: 1rem;
+}
+
+.buttons-block__button_temp-c{
+    margin-left: 15px;
+}
+
+.buttons-block__button_change-img{
+    margin-right: 15px;
+}
+
+.search-block{
+    display: flex;
+    justify-content: flex-end;
+    height: 40px;
+    width: 350px;
+    border: solid 1px rgb(211, 211, 211);
+    border-radius: 3px;
+}
+
+.main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    height: 80%;
+}
+
+.data{
+    width: 60%;
+}
+
+.city{
+    padding: 10 10 5 30;
+    font-size: 2rem;
+}
+
+.data__date-time{
+    display: flex;
+    flex-direction: row;
+    font-size: 1.5rem;
+    padding: 10 10 5 30;
+}
+
+.weather{
+    display: flex;
+    flex-direction: row;
+    min-height: 50%;
+}
+
+.weather__temp{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 40%;
+    font-size: 6rem;
+}
+
+.weather__info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 60%;
+}
+
+.weather__img{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+}
+
+.weather__img img{ 
+    width: 110%;
+    height: 150%;
+}
+
+.weather__info__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.info-text{
+    font-size: 1.2rem;
+}
+
+.forecast{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.forecast__item{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-width: 200px;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    padding: 20 30 20 30;
+}
+
+.forecast__item__day{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0 10 20 10;
+    font-size: 1.5rem;
+}
+
+.forecast__item__info{
+    display: flex;
+    flex-direction: row;
+}
+
+.forecast__temp{
+    font-size: 3rem;
+}
+
+.overlay{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.map-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 35%;
+}
+
+.map__lat-lng{
+    width: 90%;
+}
+
+#map {
+    width: 90%;
+    min-height: 80%;
+    border-radius: 10px;
+}
+
+.loader {
+    border: 2px solid #f3f3f3; 
+    border-top: 2px solid #494949; 
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin .5s linear infinite;
+    margin: 10px;
+}
+
+.hidden-opacity{
+    opacity: 0;
+}
+  
+@keyframes spin {
+   0% { transform: rotate(0deg); }
+   100% { transform: rotate(360deg); }
+} 
+
+@media only screen and (min-width: 320px) and (max-width: 1020px){
+    .main{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .data{
+        width: 97%;
+        margin: 30 0 30 0;
+    }
+
+    .map-container{
+        width: 97%;
+    }
+
+}
+
+@media only screen and (min-width: 320px) and (max-width: 655px){
+    .controlls{
+        flex-direction: column;
+    }
+
+    .buttons-block{
+        justify-content: space-around;
+        width: 50%;
+        padding: 5px;
+    }
+
+    .search-block__input{
+        width: 100%;
+    }
+
+    .city{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        font-size: 1.5rem;
+    }
+
+    .data__date-time{
+        justify-content: space-around;
+        font-size: 1.3rem;
+    }
+
+    .forecast{
+        flex-direction: column;
+
+    }
+
+    .forecast__item{
+        width: 70%;
+        border-left: none;
+        border-right: none;
+        border-top: 1px solid white;
+    }
+
+    .forecast__item__day{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0 10 20 10;
+        font-size: 1.8rem;
+    }
+    
+    .forecast__item__info{
+        justify-content: space-around;
+    }
+    
+    .forecast__temp{
+        font-size: 4rem;
+    }
+
+    .weather{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .weather__info{
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 10px;
+    }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 450px){
+    .buttons-block{
+        width: 60%;
+    }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 400px){
+    .buttons-block{
+        width: 80%;
+    }
+}
